@@ -8,7 +8,7 @@ def hello_world():
     return 'Hello World!'
 
 
-@app.route('/login',methods=['POST'])
+@app.route('/login',methods=['POST',"GET"])
 def login():
     print(request.data)
     return jsonify({'status':True})
