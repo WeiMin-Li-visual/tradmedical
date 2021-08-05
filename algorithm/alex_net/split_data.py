@@ -16,7 +16,7 @@ def mainSplitData(input_img_path, output_img_path):
 
     # 将数据集中10%的数据划分到验证集中
     # split_rate = 0.1
-    split_rate = 0.2
+    split_rate = 0.3
 
     # 指向你解压后的flower_photos文件夹
     # cwd = os.getcwd()
