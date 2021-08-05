@@ -263,3 +263,6 @@ dmypy.json
 *.iml
 out
 gen
+
+*.csv
+uploadData/images

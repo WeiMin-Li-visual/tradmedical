@@ -46,7 +46,7 @@ def mainPredict(img_path, input_file_path, type_num):
     input_path2 = os.path.join(input_file_path, "AlexNet.pth")  # 输入目录
     weights_path = input_path2
     assert os.path.exists(weights_path), "file: '{}' dose not exist.".format(weights_path)
-    model.load_state_dict(torch.load(weights_path))
+    model.load_state_dict(torch.load(weights_path, map_location=device))
 
     model.eval()
     with torch.no_grad():
