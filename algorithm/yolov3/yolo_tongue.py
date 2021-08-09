@@ -11,8 +11,8 @@ import torch
 import torch.nn as nn
 from PIL import Image, ImageDraw, ImageFont
 
-from nets.yolo3 import YoloBody
-from utils.utils import (DecodeBox, letterbox_image, non_max_suppression,
+from algorithm.yolov3.nets.yolo3 import YoloBody
+from algorithm.yolov3.utils.utils import (DecodeBox, letterbox_image, non_max_suppression,
                          yolo_correct_boxes)
 
 
@@ -25,9 +25,12 @@ from utils.utils import (DecodeBox, letterbox_image, non_max_suppression,
 class YOLO(object):
     _defaults = {
         # 修改模型路径和分类类别
-        "model_path": 'yolov3_tongue.pth',
-        "anchors_path": 'model_data/yolo_anchors.txt',
-        "classes_path": 'model_data/new_classes.txt',
+        # "model_path": './yolov3_tongue.pth',
+        # "anchors_path": './model_data/yolo_anchors.txt',
+        # "classes_path": './model_data/voc_classes.txt',
+        "model_path": os.path.join(os.getcwd(), "algorithm", "yolov3", "yolov3_tongue.pth"),
+        "anchors_path": os.path.join(os.getcwd(), "algorithm", "yolov3", "model_data", "yolo_anchors.txt"),
+        "classes_path": os.path.join(os.getcwd(), "algorithm", "yolov3", "model_data", "voc_classes.txt"),
         "model_image_size": (416, 416, 3),
         "confidence": 0.5,
         "iou": 0.3,
@@ -205,6 +208,6 @@ class YOLO(object):
             if not os.path.exists(out_path):
                 os.makedirs(out_path)
             out_path = out_path + '/' + filename + '_crop_out.bmp'
-            image.crop(boxes_crop[0, :]).save(out_path+'/'+filename+'_crop_out.bmp')
+            image.crop(boxes_crop[0, :]).save(out_path)
         return out_path,True
 

@@ -15,7 +15,7 @@ def hello_world():
 # 舌头检测
 # returen 二元组：results = ('img/out/test1_crop_out.bmp', True)
 def tongue_identify(input_path):
-    out_path = './static/image/crop'
+    out_path = './uploadData/images/crop'
     yolo = yolo_tongue.YOLO()
 
     results = yolo.detect_image(input_path,out_path)
@@ -90,7 +90,7 @@ def tongue_upload_image():
                    'tongue_shape_chi': tongue_shape_chi[type_result4], 'tongue_shape_chi_prob': str(prob4), \
                    'tongue_moss_color': tongue_moss_color[type_result5], 'tongue_moss_color_prob': str(prob5), \
                    'tongue_moss_nature': tongue_moss_nature[type_result6], 'tongue_moss_nature_prob': str(prob6), \
-                   'tongue_exist': tongue_exist(results[1])}
+                   'tongue_exist': tongue_exist[results[1]]}
     print(result_data)
     return json.dumps(result_data)
 
