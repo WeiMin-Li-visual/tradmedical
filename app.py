@@ -6,10 +6,24 @@ import time
 import os
 import config
 from algorithm.alex_net import predict
+from algorithm.yolov3 import yolo_tongue
 
 @app.route('/')
 def hello_world():
     return 'Hello World!'
+
+# 舌头检测
+# returen 二元组：results = ('img/out/test1_crop_out.bmp', True)
+def tongue_identify(input_path):
+    out_path = './static/image/crop'
+    yolo = yolo_tongue.YOLO()
+
+    results = yolo.detect_image(input_path,out_path)
+    if results[1]:
+        print('检测图片保存成功！')
+    else:
+        print('没有检测到清晰舌头，请靠近重拍！')
+    return results
 
 # 舌诊
 @app.route('/tongue/uploadimage',methods=['POST',"GET"])
@@ -18,11 +32,15 @@ def tongue_upload_image():
     image = request.files.get('image')
     pic_dir = os.path.join(config.UPLOADED_PHOTOS_DEST, fn)
     print(pic_dir)
+    print(type(image))
     image.save(pic_dir)
+
+    results = tongue_identify(pic_dir)
+
 
     # 1预测【舌质颜色】，标签含义：【dark_purple、light_red、pale_white、red】==【暗/紫3、淡红0、淡白1、红2】
     tongue_proper_color = {'dark_purple': 3, 'light_red': 0, 'pale_white': 1, 'red': 2}
-    img_path = pic_dir  # 输入图片目录
+    img_path = results[0]  # 输入图片目录
     # 模型文件夹
     input_file_path = os.path.join(os.getcwd(), 'algorithm', 'alex_net', 'tongue_proper_color')  # 输入模型文件目录
     type_num = 4
@@ -63,13 +81,16 @@ def tongue_upload_image():
     type_num = 3
     type_result6, prob6 = predict.mainPredict(img_path, input_file_path, type_num)  # 列表里的key，概率
 
+    # 7yolo预测有无舌头，标签含义：【True,False】==【检测存在1、 检测不存在0】
+    tongue_exist ={True: 1, False: 0}
+
     result_data = {'tongue_proper_color':tongue_proper_color[type_result1], 'tongue_proper_color_prob':str(prob1),\
                    'tongue_shape_pang':tongue_shape_pang[type_result2], 'tongue_shape_pang_prob':str(prob2), \
                    'tongue_shape_neng': tongue_shape_neng[type_result3], 'tongue_shape_neng_prob': str(prob3), \
                    'tongue_shape_chi': tongue_shape_chi[type_result4], 'tongue_shape_chi_prob': str(prob4), \
                    'tongue_moss_color': tongue_moss_color[type_result5], 'tongue_moss_color_prob': str(prob5), \
                    'tongue_moss_nature': tongue_moss_nature[type_result6], 'tongue_moss_nature_prob': str(prob6), \
-                   }
+                   'tongue_exist': tongue_exist(results[1])}
     print(result_data)
     return json.dumps(result_data)
 
