@@ -265,4 +265,6 @@ out
 gen
 
 *.csv
+*.pth
 uploadData/images/*.png
+uploadData/images/crop

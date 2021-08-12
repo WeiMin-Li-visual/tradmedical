@@ -15,6 +15,8 @@ from algorithm.yolov3.nets.yolo3 import YoloBody
 from algorithm.yolov3.utils.utils import (DecodeBox, letterbox_image, non_max_suppression,
                          yolo_correct_boxes)
 
+print(torch.__version__)
+print(torch.cuda.is_available())
 
 # --------------------------------------------#
 #   使用自己训练好的模型预测需要修改2个参数
