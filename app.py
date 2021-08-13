@@ -8,6 +8,9 @@ import config
 from algorithm.alex_net import predict
 from algorithm.yolov3 import yolo_tongue
 
+#定义全局变量，避免每次调用
+yolo = yolo_tongue.YOLO()
+
 @app.route('/')
 def hello_world():
     return 'Hello World!'
@@ -16,7 +19,7 @@ def hello_world():
 # returen 二元组：results = ('img/out/test1_crop_out.bmp', True)
 def tongue_identify(input_path):
     out_path = './uploadData/images/crop'
-    yolo = yolo_tongue.YOLO()
+
 
     results = yolo.detect_image(input_path,out_path)
     # if results[1]:
