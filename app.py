@@ -8,7 +8,7 @@ import config
 from algorithm.alex_net import predict
 from algorithm.yolov3 import yolo_tongue
 
-
+#定义全局变量，避免每次调用
 yolo = yolo_tongue.YOLO()
 
 @app.route('/')
