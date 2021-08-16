@@ -265,11 +265,7 @@ out
 gen
 
 *.csv
-<<<<<<< HEAD
 *.pth
 uploadData/images/*.png
 uploadData/images/crop
 files/ssl
-=======
-uploadData/images/*.png
->>>>>>> 5d3357b855b9735ed0017fdaef08bcb576fee3f5

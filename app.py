@@ -60,15 +60,15 @@ def tongue_upload_image():
     type_num = 2
     type_result2, prob2 = predict.mainPredict(img_path, input_file_path, type_num)  # 列表里的key，概率
 
-    # 3预测【舌质形态】，标签含义：【normal、neng】==【正常0、 嫩1】
-    tongue_shape_neng = {'normal': 0, 'neng': 1}
+    # 3预测【舌质形态】，标签含义：【normal、neng】==【正常0、 嫩2】
+    tongue_shape_neng = {'normal': 0, 'neng': 2}
     # 模型文件夹
     input_file_path = os.path.join(os.getcwd(), 'algorithm', 'alex_net', 'tongue_shape_neng')  # 输入模型文件目录
     type_num = 2
     type_result3, prob3 = predict.mainPredict(img_path, input_file_path, type_num)  # 列表里的key，概率
 
-    # 4预测【舌质形态】，标签含义：【normal、chi】==【正常0、 有齿痕/齿印1】
-    tongue_shape_chi = {'chi': 1, 'normal': 0}
+    # 4预测【舌质形态】，标签含义：【normal、chi】==【正常0、 有齿痕/齿印3】
+    tongue_shape_chi = {'chi': 1, 'normal': 3 }
     # 模型文件夹
     input_file_path = os.path.join(os.getcwd(), 'algorithm', 'alex_net', 'tongue_shape_chi')  # 输入模型文件目录
     type_num = 2
