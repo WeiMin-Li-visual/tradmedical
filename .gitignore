@@ -268,3 +268,4 @@ gen
 *.pth
 uploadData/images/*.png
 uploadData/images/crop
+files/ssl

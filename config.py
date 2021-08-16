@@ -6,8 +6,9 @@
 # @File    : config.py
 
 import os
+
 IMAGES = tuple('jpg jpe jpeg png gif svg bmp'.split())
 
-UPLOADED_PHOTOS_DEST=os.path.dirname(os.path.realpath(__file__))+'\\uploadData\\images'
-UPLOADED_PHOTOS_ALLOW=IMAGES
-
+UPLOADED_PHOTOS_DEST = os.path.dirname(os.path.realpath(__file__)) + '/uploadData/images'
+UPLOADED_PHOTOS_SSL = os.path.dirname(os.path.realpath(__file__)) + '/files/ssl/'
+UPLOADED_PHOTOS_ALLOW = IMAGES

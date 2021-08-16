@@ -1,4 +1,4 @@
-from flask import Flask,render_template,request,jsonify,json
+from flask import Flask, render_template, request, jsonify, json
 
 app = Flask(__name__)
 import random
@@ -8,6 +8,9 @@ import config
 from algorithm.alex_net import predict
 from algorithm.yolov3 import yolo_tongue
 
+
+yolo = yolo_tongue.YOLO()
+
 @app.route('/')
 def hello_world():
     return 'Hello World!'
@@ -16,17 +19,16 @@ def hello_world():
 # returen 二元组：results = ('img/out/test1_crop_out.bmp', True)
 def tongue_identify(input_path):
     out_path = './uploadData/images/crop'
-    yolo = yolo_tongue.YOLO()
-
-    results = yolo.detect_image(input_path,out_path)
+    results = yolo.detect_image(input_path, out_path)
     # if results[1]:
     #     print('检测图片保存成功！')
     # else:
     #     print('没有检测到清晰舌头，请靠近重拍！')
     return results
 
+
 # 舌诊
-@app.route('/tongue/uploadimage',methods=['POST',"GET"])
+@app.route('/tongue/uploadimage', methods=['POST', "GET"])
 def tongue_upload_image():
     fn = time.strftime('%Y%m%d%H%M%S') + '_%d' % random.randint(0, 100) + '.png'
     image = request.files.get('image')
@@ -43,14 +45,13 @@ def tongue_upload_image():
         result_data = {'tongue_exist': 0}
         return json.dumps(result_data)
 
-
     # 1预测【舌质颜色】，标签含义：【dark_purple、light_red、pale_white、red】==【暗/紫3、淡红0、淡白1、红2】
     tongue_proper_color = {'dark_purple': 3, 'light_red': 0, 'pale_white': 1, 'red': 2}
     img_path = results[0]  # 输入图片目录
     # 模型文件夹
     input_file_path = os.path.join(os.getcwd(), 'algorithm', 'alex_net', 'tongue_proper_color')  # 输入模型文件目录
     type_num = 4
-    type_result1, prob1 = predict.mainPredict(img_path, input_file_path, type_num)#列表里的key，概率
+    type_result1, prob1 = predict.mainPredict(img_path, input_file_path, type_num)  # 列表里的key，概率
 
     # 2预测【舌质形态】，标签含义：【normal、pang】==【正常0、胖1】
     tongue_shape_pang = {'normal': 0, 'pang': 1}
@@ -87,8 +88,8 @@ def tongue_upload_image():
     type_num = 3
     type_result6, prob6 = predict.mainPredict(img_path, input_file_path, type_num)  # 列表里的key，概率
 
-    result_data = {'tongue_proper_color':tongue_proper_color[type_result1], 'tongue_proper_color_prob':str(prob1),\
-                   'tongue_shape_pang':tongue_shape_pang[type_result2], 'tongue_shape_pang_prob':str(prob2), \
+    result_data = {'tongue_proper_color': tongue_proper_color[type_result1], 'tongue_proper_color_prob': str(prob1), \
+                   'tongue_shape_pang': tongue_shape_pang[type_result2], 'tongue_shape_pang_prob': str(prob2), \
                    'tongue_shape_neng': tongue_shape_neng[type_result3], 'tongue_shape_neng_prob': str(prob3), \
                    'tongue_shape_chi': tongue_shape_chi[type_result4], 'tongue_shape_chi_prob': str(prob4), \
                    'tongue_moss_color': tongue_moss_color[type_result5], 'tongue_moss_color_prob': str(prob5), \
@@ -96,17 +97,22 @@ def tongue_upload_image():
                    'tongue_exist': tongue_exist[results[1]]}
     return json.dumps(result_data)
 
+
 # 面诊
-@app.route('/face/uploadimage',methods=['POST',"GET"])
+@app.route('/face/uploadimage', methods=['POST', "GET"])
 def face_upload_image():
-    #TODO
+    # TODO
     return json.dumps("敬请期待")
 
+
 # 掌诊
-@app.route('/palm/uploadimage',methods=['POST',"GET"])
+@app.route('/palm/uploadimage', methods=['POST', "GET"])
 def palm_upload_image():
     # TODO
     return json.dumps("敬请期待")
 
+
 if __name__ == '__main__':
-    app.run(debug=True)
+    pem_path = os.path.join(config.UPLOADED_PHOTOS_SSL, '6121517_lib61504.top.pem')
+    pem_key = os.path.join(config.UPLOADED_PHOTOS_SSL, '6121517_lib61504.top.key')
+    app.run(host='0.0.0.0', port=9200, debug=True, ssl_context=(pem_path, pem_key))

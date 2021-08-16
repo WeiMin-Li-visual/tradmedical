@@ -3,7 +3,7 @@ import json
 import torch
 from PIL import Image
 from torchvision import transforms
-import matplotlib.pyplot as plt
+# import matplotlib.pyplot as plt
 
 # from model import AlexNet
 from algorithm.alex_net.model import AlexNet
