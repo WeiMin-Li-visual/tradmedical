@@ -8,17 +8,17 @@
 # 文件夹说明
 模型文件夹里面对应的6个子文件夹，就是与上方编码相互对应的，单行一个子模型进行单独任务的分类，其中：<br>
 1、<font color=#FFDC35>tongue_proper_color</font>文件夹内的模型对【舌质颜色 淡红（正常）0 淡白1 红2 暗/紫3】进行分类，训练测试数据来自于<font color=#FFDC35>tongue_image_train_test_set // tongue_proper_color</font>文件夹，
-它是由原始增广文件夹<font color=#FFDC35>tongue_image_data_set // tongue_proper_color</font>进行[8:2]——训练集：测试集划分得到的，其中测试集上验证准确率为0.945[train_loss: 0.314  val_accuracy: 0.945]<br>
+它是由原始增广文件夹<font color=#FFDC35>tongue_image_data_set // tongue_proper_color</font>进行[7:3]——训练集：测试集划分得到的，其中测试集上验证准确率为0.945[train_loss: 0.314  val_accuracy: 0.945]<br>
 2、<font color=#FFDC35>tongue_shape_pang</font>文件夹内的模型对【舌质形态 正常0 胖1】进行分类，训练测试数据来自于<font color=#FFDC35>tongue_image_train_test_set // tongue_shape_pang</font>文件夹，
-它是由原始增广文件夹<font color=#FFDC35>tongue_image_data_set // tongue_shape_pang</font>进行[8:2]——训练集：测试集划分得到的，其中测试集上验证准确率为0.947[train_loss: 0.193  val_accuracy: 0.947]<br>
+它是由原始增广文件夹<font color=#FFDC35>tongue_image_data_set // tongue_shape_pang</font>进行[7:3]——训练集：测试集划分得到的，其中测试集上验证准确率为0.947[train_loss: 0.193  val_accuracy: 0.947]<br>
 3、<font color=#FFDC35>tongue_shape_neng</font>文件夹内的模型对【舌质形态 正常0 胖1】进行分类，训练测试数据来自于<font color=#FFDC35>tongue_image_train_test_set // tongue_shape_neng</font>文件夹，
-它是由原始增广文件夹<font color=#FFDC35>tongue_image_data_set // tongue_shape_neng</font>进行[8:2]——训练集：测试集划分得到的，其中测试集上验证准确率为0.965[train_loss: 0.179  val_accuracy: 0.965]<br>
+它是由原始增广文件夹<font color=#FFDC35>tongue_image_data_set // tongue_shape_neng</font>进行[7:3]——训练集：测试集划分得到的，其中测试集上验证准确率为0.965[train_loss: 0.179  val_accuracy: 0.965]<br>
 4、<font color=#FFDC35>tongue_shape_chi</font>文件夹内的模型对【舌质形态 正常0  有齿痕或齿印 1】进行分类，训练测试数据来自于<font color=#FFDC35>tongue_image_train_test_set // tongue_shape_chi</font>文件夹，
-它是由原始增广文件夹<font color=#FFDC35>tongue_image_data_set // tongue_shape_chi</font>进行[8:2]——训练集：测试集划分得到的，其中测试集上验证准确率为0.972[train_loss: 0.150  val_accuracy: 0.972]<br>
+它是由原始增广文件夹<font color=#FFDC35>tongue_image_data_set // tongue_shape_chi</font>进行[7:3]——训练集：测试集划分得到的，其中测试集上验证准确率为0.972[train_loss: 0.150  val_accuracy: 0.972]<br>
 5、<font color=#FFDC35>tongue_moss_color</font>文件夹内的模型对【舌质形态 正常0  有齿痕或齿印 1】进行分类，训练测试数据来自于<font color=#FFDC35>tongue_image_train_test_set // tongue_moss_color</font>文件夹，
-它是由原始增广文件夹<font color=#FFDC35>tongue_image_data_set // tongue_moss_color</font>进行[8:2]——训练集：测试集划分得到的，其中测试集上验证准确率为0.962[train_loss: 0.186  val_accuracy: 0.962]<br>
+它是由原始增广文件夹<font color=#FFDC35>tongue_image_data_set // tongue_moss_color</font>进行[7:3]——训练集：测试集划分得到的，其中测试集上验证准确率为0.962[train_loss: 0.186  val_accuracy: 0.962]<br>
 6、<font color=#FFDC35>tongue_moss_nature</font>文件夹内的模型对【舌质形态 正常0  有齿痕或齿印 1】进行分类，训练测试数据来自于<font color=#FFDC35>tongue_image_train_test_set // tongue_moss_nature</font>文件夹，
-它是由原始增广文件夹<font color=#FFDC35>tongue_image_data_set // tongue_moss_nature</font>进行[8:2]——训练集：测试集划分得到的，其中测试集上验证准确率为0.928[train_loss: 0.309  val_accuracy: 0.928]<br>
+它是由原始增广文件夹<font color=#FFDC35>tongue_image_data_set // tongue_moss_nature</font>进行[7:3]——训练集：测试集划分得到的，其中测试集上验证准确率为0.928[train_loss: 0.309  val_accuracy: 0.928]<br>
 
 #标签提取与数据扩充
 对舌的诊断描述（医生记录的一句话）提取的标签<br>
