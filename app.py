@@ -54,7 +54,7 @@ def tongue_upload_image():
     type_num = 2
     type_result0, prob0 = predict.mainPredict(img_path, input_file_path, type_num)  # 列表里的key，概率
     print('分类结果：' + str(type_result0) + '概率：' + str(prob0))
-    if not str(type_result0)=='non_exist':
+    if str(type_result0) == 'non_exist':
         print('没有检测到清晰舌头，请靠近重拍！')
         result_data = {'tongue_exist': 0}
         return json.dumps(result_data)
