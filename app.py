@@ -33,8 +33,6 @@ def tongue_upload_image():
     fn = time.strftime('%Y%m%d%H%M%S') + '_%d' % random.randint(0, 100) + '.png'
     image = request.files.get('image')
     pic_dir = os.path.join(config.UPLOADED_PHOTOS_DEST, fn)
-    print(pic_dir)
-    print(type(image))
     image.save(pic_dir)
 
     results = tongue_identify(pic_dir)
@@ -68,7 +66,7 @@ def tongue_upload_image():
     type_result3, prob3 = predict.mainPredict(img_path, input_file_path, type_num)  # 列表里的key，概率
 
     # 4预测【舌质形态】，标签含义：【normal、chi】==【正常0、 有齿痕/齿印3】
-    tongue_shape_chi = {'chi': 1, 'normal': 3 }
+    tongue_shape_chi = {'chi': 3, 'normal': 0 }
     # 模型文件夹
     input_file_path = os.path.join(os.getcwd(), 'algorithm', 'alex_net', 'tongue_shape_chi')  # 输入模型文件目录
     type_num = 2
