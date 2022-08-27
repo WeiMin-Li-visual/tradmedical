@@ -5,6 +5,7 @@ import random
 import time
 import os
 import config
+import base64
 from algorithm.alex_net import predict
 from algorithm.yolov3 import yolo_tongue
 
@@ -26,6 +27,12 @@ def tongue_identify(input_path):
     #     print('没有检测到清晰舌头，请靠近重拍！')
     return results
 
+#图片编码
+def img_stream(img_local_path):
+    with open(img_local_path, 'rb') as img_f:
+        img_stream = img_f.read()
+        img_stream = base64.b64encode(img_stream).decode()
+    return img_stream
 
 # 舌诊
 @app.route('/tongue/uploadimage', methods=['POST', "GET"])
@@ -54,7 +61,7 @@ def tongue_upload_image():
     # type_num = 2
     # type_result0, prob0 = predict.mainPredict(img_path, input_file_path, type_num)  # 列表里的key，概率
     # print('分类结果：' + str(type_result0) + '概率：' + str(prob0))
-    # if str(type_result0)=='non_exist':
+    # if str(type_result0) == 'non_exist':
     #     print('没有检测到清晰舌头，请靠近重拍！')
     #     result_data = {'tongue_exist': 0}
     #     return json.dumps(result_data)
@@ -108,7 +115,7 @@ def tongue_upload_image():
                    'tongue_shape_chi': tongue_shape_chi[type_result4], 'tongue_shape_chi_prob': str(prob4), \
                    'tongue_moss_color': tongue_moss_color[type_result5], 'tongue_moss_color_prob': str(prob5), \
                    'tongue_moss_nature': tongue_moss_nature[type_result6], 'tongue_moss_nature_prob': str(prob6), \
-                   'tongue_exist': tongue_exist[results[1]]}
+                   'tongue_exist': tongue_exist[results[1]], 'tongue_crop_img_stream': img_stream(results[0])}
     return json.dumps(result_data)
 
 
