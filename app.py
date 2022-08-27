@@ -13,7 +13,7 @@ yolo = yolo_tongue.YOLO()
 
 @app.route('/')
 def hello_world():
-    return 'Hello World!'
+    return render_template('index.html');
 
 # 舌头检测
 # returen 二元组：results = ('img/out/test1_crop_out.bmp', True)
@@ -35,6 +35,8 @@ def tongue_upload_image():
     pic_dir = os.path.join(config.UPLOADED_PHOTOS_DEST, fn)
     image.save(pic_dir)
 
+    print("cxx")
+
     results = tongue_identify(pic_dir)
     # 7yolo预测有无舌头，标签含义：【True,False】==【检测存在1、 检测不存在0】
     tongue_exist = {True: 1, False: 0}
@@ -43,19 +45,19 @@ def tongue_upload_image():
         result_data = {'tongue_exist': 0}
         return json.dumps(result_data)
 
-    #利用人类裁剪图 & 舌像图 进行二分类判断是否有舌头，效果不佳，只是输出看看，没有写入传给前端
-    # 0预测【有无舌头】，标签含义：【exist、non_exist】==【存在、不存在】
-    exist_tongue = {'exist': 1, 'non_exist': 0}
-    img_path = results[0]  # 输入图片目录
-    # 模型文件夹
-    input_file_path = os.path.join(os.getcwd(), 'algorithm', 'alex_net', 'exist_tongue')  # 输入模型文件目录
-    type_num = 2
-    type_result0, prob0 = predict.mainPredict(img_path, input_file_path, type_num)  # 列表里的key，概率
-    print('分类结果：' + str(type_result0) + '概率：' + str(prob0))
-    if str(type_result0)=='non_exist':
-        print('没有检测到清晰舌头，请靠近重拍！')
-        result_data = {'tongue_exist': 0}
-        return json.dumps(result_data)
+    # #利用人类裁剪图 & 舌像图 进行二分类判断是否有舌头，效果不佳，只是输出看看，没有写入传给前端
+    # # 0预测【有无舌头】，标签含义：【exist、non_exist】==【存在、不存在】
+    # exist_tongue = {'exist': 1, 'non_exist': 0}
+    # img_path = results[0]  # 输入图片目录
+    # # 模型文件夹
+    # input_file_path = os.path.join(os.getcwd(), 'algorithm', 'alex_net', 'exist_tongue')  # 输入模型文件目录
+    # type_num = 2
+    # type_result0, prob0 = predict.mainPredict(img_path, input_file_path, type_num)  # 列表里的key，概率
+    # print('分类结果：' + str(type_result0) + '概率：' + str(prob0))
+    # if str(type_result0)=='non_exist':
+    #     print('没有检测到清晰舌头，请靠近重拍！')
+    #     result_data = {'tongue_exist': 0}
+    #     return json.dumps(result_data)
 
     # 1预测【舌质颜色】，标签含义：【dark_purple、light_red、pale_white、red】==【暗/紫3、淡红0、淡白1、红2】
     tongue_proper_color = {'dark_purple': 3, 'light_red': 0, 'pale_white': 1, 'red': 2}
@@ -125,7 +127,7 @@ def palm_upload_image():
 
 
 if __name__ == '__main__':
-    pem_path = os.path.join(config.UPLOADED_PHOTOS_SSL, '6121517_lib61504.top.pem')
-    pem_key = os.path.join(config.UPLOADED_PHOTOS_SSL, '6121517_lib61504.top.key')
+    pem_path = os.path.join(config.UPLOADED_PHOTOS_SSL, '8369638_lib61504.top.pem')
+    pem_key = os.path.join(config.UPLOADED_PHOTOS_SSL, '8369638_lib61504.top.key')
     app.run(host='0.0.0.0', port=9200, debug=True, ssl_context=(pem_path, pem_key))
     # app.run(host='0.0.0.0', port=9200, debug=True)
