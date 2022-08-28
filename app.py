@@ -42,8 +42,6 @@ def tongue_upload_image():
     pic_dir = os.path.join(config.UPLOADED_PHOTOS_DEST, fn)
     image.save(pic_dir)
 
-    print("cxx")
-
     results = tongue_identify(pic_dir)
     # 7yolo预测有无舌头，标签含义：【True,False】==【检测存在1、 检测不存在0】
     tongue_exist = {True: 1, False: 0}
@@ -109,6 +107,9 @@ def tongue_upload_image():
     type_num = 3
     type_result6, prob6 = predict.mainPredict(img_path, input_file_path, type_num)  # 列表里的key，概率
 
+    # 处于用户隐私，识别完图片之后将图片删除
+    if(os.path.isfile(pic_dir)):
+        os.remove(pic_dir)
     result_data = {'tongue_proper_color': tongue_proper_color[type_result1], 'tongue_proper_color_prob': str(prob1), \
                    'tongue_shape_pang': tongue_shape_pang[type_result2], 'tongue_shape_pang_prob': str(prob2), \
                    'tongue_shape_neng': tongue_shape_neng[type_result3], 'tongue_shape_neng_prob': str(prob3), \
